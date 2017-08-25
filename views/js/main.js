@@ -553,6 +553,7 @@ function ganeratePizzas() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
-document.addEventListener('DOMContentLoaded', function() {
+/*document.addEventListener('DOMContentLoaded', function() {
   requestAnimationFrame(ganeratePizzas);
-});
+});*/
+requestAnimationFrame(ganeratePizzas);
