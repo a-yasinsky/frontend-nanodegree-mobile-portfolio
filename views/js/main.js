@@ -471,20 +471,19 @@ window.performance.mark("mark_start_generating"); // collect timing data
 /*var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
   pizzasDiv.appendChild(pizzaElementGenerator(i));
-}
+}*/
 var pizzasDiv = document.getElementById("randomPizzas");
 var count = 100;
 var startPizzaNumber = 2;
 function loadPizzas() {
 	if(startPizzaNumber >= count)
 		return;
-	for (var i = startPizzaNumber; i < count; i++) {
+	for (var i = startPizzaNumber; i < count; i++, startPizzaNumber++) {
 	  pizzasDiv.appendChild(pizzaElementGenerator(i));
-	  startPizzaNumber++;
 	}
 	requestAnimationFrame(loadPizzas);
 }
-requestAnimationFrame(loadPizzas);*/
+requestAnimationFrame(loadPizzas);
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
 window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
@@ -528,15 +527,17 @@ function updatePositions() {
     logAverageFrame(timesToUpdatePosition);
   }
 }
-
-// runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
-
-// Generates the sliding pizzas when the page loads.
-document.addEventListener('DOMContentLoaded', function() {
+var movingPizzasAmount = 200;
+var movingPizzasStart = 0;
+function ganeratePizzas() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  if (movingPizzasStart >= movingPizzasAmount) {
+	  updatePositions();
+	  return;
+  }
+  var movingPizzas1 = document.querySelector("#movingPizzas1");
+  for (var i = movingPizzasStart; i < movingPizzasAmount; i++, movingPizzasStart++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -544,7 +545,14 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingPizzas1.appendChild(elem);
   }
-  updatePositions();
+  requestAnimationFrame(ganeratePizzas);
+}
+// runs updatePositions on scroll
+window.addEventListener('scroll', updatePositions);
+
+// Generates the sliding pizzas when the page loads.
+document.addEventListener('DOMContentLoaded', function() {
+  requestAnimationFrame(ganeratePizzas);
 });
