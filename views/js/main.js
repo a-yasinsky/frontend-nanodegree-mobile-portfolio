@@ -536,7 +536,10 @@ function ganeratePizzas() {
 	  updatePositions();
 	  return;
   }
-  var movingPizzas1 = document.querySelector("#movingPizzas1");
+  var movingPizzas1 = document.createElement('div');
+  movingPizzas1.setAttribute('id', 'movingPizzas1');  
+  movingPizzas1.classList.add('col-md-6');
+  document.body.appendChild(movingPizzas1);
   for (var i = movingPizzasStart; i < movingPizzasAmount; i++, movingPizzasStart++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
