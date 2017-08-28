@@ -515,16 +515,17 @@ function updatePositions() {
   } 
 }
 
-var movingPizzasAmount = 200;
-var movingPizzasStart = 0;
+
 function ganeratePizzas() {
   var cols = 8;
   var s = 256;
+  var movingPizzasAmount = Math.ceil( window.innerHeight / s) * cols;
+  
   var movingPizzas1 = document.createElement('div');
   movingPizzas1.setAttribute('id', 'movingPizzas1');  
   movingPizzas1.classList.add('col-md-6');
   document.body.appendChild(movingPizzas1);
-  for (var i = movingPizzasStart; i < movingPizzasAmount; i++, movingPizzasStart++) {
+  for (var i = 0; i < movingPizzasAmount; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
