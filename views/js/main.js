@@ -421,6 +421,7 @@ var resizePizzas = function(size) {
 
   changeSliderLabel(size);
 
+   // Direct percent width, without old, new and dx calculations
    function sizeSwitcher (size) {
       switch(size) {
         case "1":
@@ -455,6 +456,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+
+// Tried do this with requestAnimationFrame, but it works with ower speed, in DevTools one more Animation Frame requested procedure appears
+
 /*var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
   pizzasDiv.appendChild(pizzaElementGenerator(i));
@@ -519,12 +523,14 @@ function updatePositions() {
 function ganeratePizzas() {
   var cols = 8;
   var s = 256;
+  // Calculating the number of pizzas
   var movingPizzasAmount = Math.ceil( window.innerHeight / s) * cols;
-  
+  // Generating new div, wich will contain all moving pizzas
   var movingPizzas1 = document.createElement('div');
   movingPizzas1.setAttribute('id', 'movingPizzas1');  
   movingPizzas1.classList.add('col-md-6');
   document.body.appendChild(movingPizzas1);
+  // Generate moving pizzas
   for (var i = 0; i < movingPizzasAmount; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
